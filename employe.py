@@ -259,6 +259,7 @@ class emplyee:
         self.var_user_type.set("Admin")
         self.txt_address.delete('1.0', END)
         self.var_salary.set("")
+        self.var_searchtxt.set("")
         self.EmployeeTable.selection_remove(self.EmployeeTable.selection())
 
     def search(self):

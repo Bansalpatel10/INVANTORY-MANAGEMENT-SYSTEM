@@ -1,6 +1,7 @@
 from tkinter import*
 from PIL import Image,ImageTk
 from employe import emplyee
+from supplier import supllier
 class IMS:
     def __init__(self,root):
         self.root=root
@@ -34,7 +35,7 @@ class IMS:
         lbl_menu=Label(leftmenu,text="Menu",font=("times new roman",20),bg="#009688").pack(side="top",fill=X)
 
         btn_employe=Button(leftmenu,text="Employee",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2",command=self.employee).pack(side=TOP,fill=X)
-        btn_supplier=Button(leftmenu,text="Supplier",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
+        btn_supplier=Button(leftmenu,text="Supplier",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2",command=self.supllier).pack(side=TOP,fill=X)
         btn_category=Button(leftmenu,text="Category",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_product=Button(leftmenu,text="Product",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_sale=Button(leftmenu,text="Sale",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
@@ -62,6 +63,10 @@ class IMS:
 # buttons working
 
     def employee(self):
+        self.new_win=Toplevel(self.root)
+        self.new_obj=emplyee(self.new_win)
+
+    def supllier(self):
         self.new_win=Toplevel(self.root)
         self.new_obj=emplyee(self.new_win)
 
