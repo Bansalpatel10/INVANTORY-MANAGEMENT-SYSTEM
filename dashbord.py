@@ -1,5 +1,6 @@
 from tkinter import*
 from PIL import Image,ImageTk
+from employe import emplyee
 class IMS:
     def __init__(self,root):
         self.root=root
@@ -32,15 +33,12 @@ class IMS:
         self.icon_side=PhotoImage(file="images/side.png")
         lbl_menu=Label(leftmenu,text="Menu",font=("times new roman",20),bg="#009688").pack(side="top",fill=X)
 
-        btn_employe=Button(leftmenu,text="Employee",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
+        btn_employe=Button(leftmenu,text="Employee",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2",command=self.employee).pack(side=TOP,fill=X)
         btn_supplier=Button(leftmenu,text="Supplier",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_category=Button(leftmenu,text="Category",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_product=Button(leftmenu,text="Product",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_sale=Button(leftmenu,text="Sale",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
         btn_exit=Button(leftmenu,text="Exit",font=("times new roman",20,"bold"),bg="white",bd=3,cursor="hand2").pack(side=TOP,fill=X)
-
-        # footer
-        lbl_footer=Label(self.root,text="IMS by Bansal Manavadariya",font=("times new roman",15),bg="#4d636d",fg="white").pack(side=BOTTOM,fill=X)
 
         # content
         self.lbl_employee=Label(self.root,text="Total Employe\n[ 0 ]",bg="#33bbf9",fg="white",font=("times new roman",20,"bold"),bd=5,relief=RIDGE)
@@ -58,7 +56,16 @@ class IMS:
         self.lbl_sale=Label(self.root,text="Total Sales\n[ 0 ]",bg="#ffc107",fg="white",font=("times new roman",20,"bold"),bd=5,relief=RIDGE)
         self.lbl_sale.place(x=650,y=300,height=150,width=300)
 
+        # footer
+        lbl_footer=Label(self.root,text="IMS by Bansal Manavadariya",font=("times new roman",15),bg="#4d636d",fg="white").pack(side=BOTTOM,fill=X)
 
-root=Tk()
-obj=IMS(root)
-root.mainloop() 
+# buttons working
+
+    def employee(self):
+        self.new_win=Toplevel(self.root)
+        self.new_obj=emplyee(self.new_win)
+
+if __name__=="__main__":
+    root=Tk()
+    obj=IMS(root)
+    root.mainloop() 
