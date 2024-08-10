@@ -9,7 +9,7 @@ class IMS:
         self.root.title("Inventory Management System")
         self.root.config(bg="White")
 
-        # titel
+        # title
         self.icon_title=PhotoImage(file="images/logo1.png")
         self.title=Label(self.root,text="Inventory Management System",image=self.icon_title,compound="left",font=("times new roman",40,"bold"),bg="#010c48",fg="white",anchor="w",padx=20).place(x=0,y=0,relwidth=1,height=70)
 
@@ -68,7 +68,7 @@ class IMS:
 
     def supllier(self):
         self.new_win=Toplevel(self.root)
-        self.new_obj=emplyee(self.new_win)
+        self.new_obj=supllier(self.new_win)
 
 if __name__=="__main__":
     root=Tk()
