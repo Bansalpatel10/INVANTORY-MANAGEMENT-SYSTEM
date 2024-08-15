@@ -97,10 +97,6 @@ class sales:
         self.bill_area.delete('1.0',END)
         self.var_invoice.set("")
 
-
-
-
-
 if __name__=="__main__":
     root=Tk()
     obj=sales(root)
