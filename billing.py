@@ -1,10 +1,13 @@
 import sqlite3
+import sys
 from tkinter import*
 from PIL import Image,ImageTk
 from tkinter import ttk, messagebox
 import time
 import os
 import tempfile
+
+from fpdf import FPDF
 
 
 class billing:
@@ -461,6 +464,7 @@ class billing:
         self.txt_bill_area.delete('1.0',END)
         self.cart_title.config(text=f"Cart\tTotal Products [0]")
         self.var_search.set("")
+        self.chk_print=0
         self.clear_cart()
         self.show()
         self.show_cart()
@@ -472,14 +476,82 @@ class billing:
         self.lbl_clock.after(200,self.update_date_time)
 
     def print_bill(self):
-        if self.chk_print==1:
-            messagebox.showinfo('Print','Please Wait while printing',parent=self.root)
-            new_file=tempfile.mktemp('.txt')
-            open(new_file,'w').write(self.txt_bill_area.get('1.0',END))
-            os.startfile(new_file,"print")
+        con = sqlite3.connect('ims.db')
+        cur = con.cursor()
+
+        if self.chk_print == 1:
+            messagebox.showinfo('Print', 'Please wait while printing', parent=self.root)
+
+            # Fetch data
+            # bill = self.fetch_bill_data(self.invoice)
+
+            # Create a temporary file with a .pdf extension
+            new_file = tempfile.mktemp('.pdf')
+
+            # Initialize FPDF2 and create a PDF
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_auto_page_break(auto=True, margin=15)
+            pdf.set_font("Arial", size=12)
+
+            # Add a title and some styling
+            pdf.set_font("Arial", 'B', 16)
+            pdf.cell(0, 10, 'Invoice', ln=True, align='C')
+            pdf.ln(10)
+
+            # Add headers from fetched data
+            pdf.set_font("Arial", 'B', 12)
+            pdf.cell(0, 10, 'Bill To:', ln=True)
+            pdf.set_font("Arial", size=12)
+            pdf.cell(0, 10, f'Customer Name: {self.var_c_name.get()}', ln=True)  # Example placeholder
+            pdf.cell(0, 10, f'Contact No.: {self.var_c_contact.get()}', ln=True)  # Example placeholder
+            pdf.cell(0, 10, f'Date: {time.strftime("%d/%m/%Y")}', ln=True)  # Example placeholder
+            pdf.ln(10)
+
+            # Draw a line
+            pdf.set_font("Arial", 'B', 12)
+            pdf.cell(80, 10, 'Product Name', border=1)
+            pdf.cell(40, 10, 'Price', border=1)
+            pdf.cell(40, 10, 'Quantity', border=1)
+            pdf.cell(0, 10, 'Total', border=1, ln=True)
+            pdf.set_font("Arial", size=12)
+
+            # Add items from fetched data
+            total_amount = 0
+            for row in self.cart_list:
+                product_name = row[1]
+                price = float(row[2])  # Convert price to float
+                quantity = int(row[3])  # Convert quantity to integer
+
+                pdf.cell(80, 10, product_name, border=1)  # Product Name
+                pdf.cell(40, 10, f'${price:.2f}', border=1)  # Price
+                pdf.cell(40, 10, str(quantity), border=1)  # Quantity
+                item_total = price * quantity  # Calculate total for the item
+                pdf.cell(0, 10, f'${item_total:.2f}', border=1, ln=True)  # Total for this item
+                total_amount += item_total  # Add to the total amount
+
+            # Calculate discount
+            discount = total_amount * 0.05  # 5% discount
+            discounted_total = total_amount - discount
+
+            pdf.ln(10)
+            pdf.set_font("Arial", 'B', 12)
+            pdf.cell(120, 10, 'Total Amount:', 0)
+            pdf.cell(0, 10, f'${total_amount:.2f}', 0, ln=True)
+
+            # Add discount and final total
+            pdf.cell(120, 10, 'Discount (5%):', 0)
+            pdf.cell(0, 10, f'-${discount:.2f}', 0, ln=True)
+            pdf.cell(120, 10, 'Total After Discount:', 0)
+            pdf.cell(0, 10, f'${discounted_total:.2f}', 0, ln=True)
+
+            # Save the PDF to the temporary file
+            pdf.output(new_file)
+
+            # Print the temporary PDF file directly without opening save dialog
+            os.startfile(new_file, "print")
         else:
-            messagebox.showerror('Print','Please generate bill',parent=self.root)
-           
+            messagebox.showerror('Print', 'Please generate bill', parent=self.root)
 
 if __name__=="__main__":
     root=Tk()
