@@ -1,3 +1,4 @@
+import time
 from tkinter import*
 from PIL import Image,ImageTk
 from employe import emplyee
@@ -63,6 +64,8 @@ class IMS:
         # footer
         lbl_footer=Label(self.root,text="IMS by Bansal Manavadariya",font=("times new roman",15),bg="#4d636d",fg="white").pack(side=BOTTOM,fill=X)
 
+        self.update_date_time()
+        
 # buttons working
 
     def employee(self):
@@ -84,7 +87,12 @@ class IMS:
     def sales(self):
         self.new_win=Toplevel(self.root)
         self.new_obj=sales(self.new_win)
-
+        
+    def update_date_time(self):
+        time_=time.strftime("%I:%M:%S")
+        date_=time.strftime("%d/%m/%Y")
+        self.lbl_clock.config(text=f"Welcome Inventory Management System\t\t Date:{str(date_)}\t\t Time:{str(time_)}",font=("times new roman",15),bg="#4d636d",fg="white")
+        self.lbl_clock.after(200,self.update_date_time)
 if __name__=="__main__":
     root=Tk()
     obj=IMS(root)
