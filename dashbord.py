@@ -13,19 +13,19 @@ import os
 class IMS:
     def __init__(self, root):
         self.root=root
-        self.root.geometry("1350x700+0+0")
-        self.root.title("Inventory Management System")
+        self.root.geometry("1350x700+250+190")
+        self.root.title("Bright Bazaar")
         self.root.config(bg="White")
 
         # title
         self.icon_title=PhotoImage(file="images/logo1.png")
-        self.title=Label(self.root,text="Inventory Management System",image=self.icon_title,compound="left",font=("times new roman",40,"bold"),bg="#010c48",fg="white",anchor="w",padx=20).place(x=0,y=0,relwidth=1,height=70)
+        self.title=Label(self.root,text="Bright Bazaar",image=self.icon_title,compound="left",font=("times new roman",40,"bold"),bg="#010c48",fg="white",anchor="w",padx=20).place(x=0,y=0,relwidth=1,height=70)
 
         # button logout
         btn_logout=Button(self.root,command=self.logout,text="Logout",font=("times new roman",15,"bold"),bg="yellow",cursor="hand2").place(x=1100,y=5,height=50,width=150)
 
         # clock
-        self.lbl_clock=Label(self.root,text="Welcome Inventory Management System\t\t Date:DD-MM-YYYY\t\t Time:HH:MM:SS",font=("times new roman",15),bg="#4d636d",fg="white")
+        self.lbl_clock=Label(self.root,text="Welcome Bright Bazaar\t\t Date:DD-MM-YYYY\t\t Time:HH:MM:SS",font=("times new roman",15),bg="#4d636d",fg="white")
         self.lbl_clock.place(x=0,y=70,relwidth=1,height=30)
 
         # left menu
@@ -122,7 +122,7 @@ class IMS:
             
             time_=time.strftime("%I:%M:%S")
             date_=time.strftime("%d/%m/%Y")
-            self.lbl_clock.config(text=f"Welcome Inventory Management System\t\t Date:{str(date_)}\t\t Time:{str(time_)}",font=("times new roman",15),bg="#4d636d",fg="white")
+            self.lbl_clock.config(text=f"Welcome Bright Bazaar\t\t Date:{str(date_)}\t\t Time:{str(time_)}",font=("times new roman",15),bg="#4d636d",fg="white")
             self.lbl_clock.after(200,self.update_content)
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
